@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{LayoutPadrao.html}">
+<section layout:fragment="content">
+	<p>
+		<a th:href="@{/Produtos/novo}">Cadastrar</a>
+	</p>
+	<form method="GET" th:action="@{/Produtos}" th:object="${produtoFiltro}">
+		<select name="categoria" th:field="*{categoria}">
+			<option th:each="categoria : ${categorias}" th:value="${categoria}"
+				th:text="${categoria.descricaoCategoria}"></option>
+		</select>
+		<input type="checkbox" name="maxAndMin" th:checked="*{maxAndMin}"/>
+		<label for="maxAndMin">Listar a maior e menor quantidade</label>
+		<button type="submit">Filtrar</button>
+	</form>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Quantidade</th>
+				<th>Categoria</th>
+				<th>Opções</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="produto: ${produtos}">
+				<td th:text="${produto.descricao}"></td>
+				<td th:text="${produto.quantidade}"></td>
+				<td th:text="${produto.categoria.descricaoCategoria}"></td>
+				<td><a th:href="@{/Produtos/{id}(id=${produto.id})}">Editar</a>
+					<a th:href="@{/Produtos/remove/{id}(id=${produto.id})}">Excluir</a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" th:if="${#lists.isEmpty(produtos)}">Nenhum
+					produto encontrado.</td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+</body>
+</html>

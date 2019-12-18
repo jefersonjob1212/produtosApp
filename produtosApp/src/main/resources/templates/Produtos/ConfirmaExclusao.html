@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{LayoutPadrao.html}">
+	<section layout:fragment="content">
+		<h3>Deseja excluir este produto?</h3>
+		<form method="POST" th:action="@{/Produtos/remove}" th:object="${produto}">
+			<input type="hidden" th:field="*{id}">
+			<input type="hidden" name="_method" value="DELETE"/>
+			<p><label for="descricao">Nome:</label></p>
+			<p><input readonly="readonly" type="text" id="descricao" th:field="*{descricao}"></p>
+			<p><label for="quantidade">Quantidade:</label></p>
+			<p><input readonly="readonly" type="number" id="quantidade" th:field="*{quantidade}"></p>
+			<p><label for="categoria">Categoria:</label></p>
+			<p>
+				<select disabled="disabled" name="categoria" th:field="*{categoria}">
+					<option th:each="categoria : ${categorias}" 
+						th:value="${categoria}" th:text="${categoria.descricaoCategoria}"></option>
+				</select>
+			</p>
+			<button type="submit">Excluir</button>
+		</form>
+	</section>
+</body>
+</html>
